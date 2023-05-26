@@ -1,0 +1,50 @@
+{
+  "name": "utility-class-components",
+  "version": "0.0.1",
+  "description": "Utility Class React Component Library",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "files": [
+    "dist"
+  ],
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "rollup": "rollup -c",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/custardcream98/utility-class-components.git"
+  },
+  "keywords": [
+    "utility-class",
+    "react"
+  ],
+  "author": "custardcream98",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/custardcream98/utility-class-components/issues"
+  },
+  "homepage": "https://github.com/custardcream98/utility-class-components#readme",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "@rollup/plugin-terser": "^0.4.3",
+    "@rollup/plugin-typescript": "^11.1.1",
+    "@types/react": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^5.59.7",
+    "@typescript-eslint/parser": "^5.59.7",
+    "eslint": "^8.41.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-sort-keys-fix": "^1.1.2",
+    "prettier": "^2.8.8",
+    "react": "^18.2.0",
+    "rollup": "^3.23.0",
+    "rollup-plugin-dts": "^5.3.0",
+    "typescript": "^5.0.4"
+  }
+}
