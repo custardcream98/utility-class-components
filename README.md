@@ -24,6 +24,15 @@ function Page() {
 }
 ```
 
+## Installation
+
+This package is registerd on [npmjs](https://www.npmjs.com/package/utility-class-components).
+
+```shell
+npm i utility-class-components
+# or yarn add utility-class-components
+```
+
 ## Utility Class
 
 You can use any library you want: TailwindCSS, UnoCSS, WindiCSS.
