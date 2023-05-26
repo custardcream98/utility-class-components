@@ -1,6 +1,6 @@
 # utility-class-components
 
-Build React Component using utility class in `styled-component` way!
+Build React Component using utility class in `styled-components` way!
 
 ```jsx
 import { utld, ud } from "utility-class-components";
@@ -47,18 +47,18 @@ const RedContainer = utld(Container)`
 ## `ud`
 
 ```ts
-const commonStyle = wd`
+const commonStyle = ud`
   text-red-500
   hover:text-blue-500
 `;
 
-// You can nest wd inside other wd or utld
+// You can nest ud inside other ud or utld
 const Container = utld.div`
-  ${wd`
+  ${ud`
     text-red-500
     hover:text-blue-500
 
-    ${wd`
+    ${ud`
       w-[100px]
       h-[100px]
     `}
@@ -110,8 +110,8 @@ Add the following to your `settings.json`:
   const Container = utld.div<Props>`
     ${{
       type: {
-        primary: wd`flex`,
-        secondary: wd`inline-block`,
+        primary: ud`flex`,
+        secondary: ud`inline-block`,
       },
     }}
   `;
