@@ -1,3 +1,4 @@
+import { transformGroupSelector } from "../transformers";
 import type { ClassValue } from "../types";
 
 import { cx } from "./cx";
@@ -7,14 +8,15 @@ import { cx } from "./cx";
  */
 export const ud = (template: TemplateStringsArray, ...templateElements: ClassValue[]) => {
   return template
-    .reduce((sum, n, index) => {
+    .reduce((sum, templateString, index) => {
+      const transformedTemplateString = transformGroupSelector(templateString);
       const templateElement = templateElements[index];
 
       if (!templateElement) {
-        return `${sum} ${cx(n)}`;
+        return `${sum} ${cx(transformedTemplateString)}`;
       }
 
-      return `${sum} ${cx(n)} ${cx(templateElement)}`;
+      return `${sum} ${cx(transformedTemplateString)} ${cx(templateElement)}`;
     }, "")
     .replace(/\s{2,}/g, " ");
 };
