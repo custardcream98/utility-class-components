@@ -1,8 +1,8 @@
 # utility-class-components
 
-Build React Component using utility class in `styled-components` way!
+Build React components using utility classes in the `styled-components` way!
 
-```jsx
+```tsx
 import { utld, ud } from "utility-class-components";
 
 const boxStyle = ud`
@@ -12,21 +12,25 @@ const boxStyle = ud`
   bg-red
 `;
 
-const Container = utld.div`
+const Container = utld.div<{ isRed: boolean }>`
   flex
   text-bold
 
   ${boxStyle}
+
+  ${({ isRed }) => isRed && "text-red-500"}
 `;
 
 function Page() {
-  return <Container>AWESOME!!</Container>;
+  return <Container isRed={true}>AWESOME!!</Container>;
 }
 ```
 
+---
+
 ## Installation
 
-This package is registerd on [npmjs](https://www.npmjs.com/package/utility-class-components).
+This package is published on [npm registry](https://www.npmjs.com/package/utility-class-components).
 
 ```shell
 npm i utility-class-components
@@ -49,7 +53,7 @@ const Container = utld.div`
   text-bold
 `;
 
-// You can extend other React Component's style too.
+// You can also extend the style of other React components.
 const RedContainer = utld(Container)`
   bg-red-500
 `;
@@ -65,7 +69,7 @@ const commonStyle = ud`
   hover:text-blue-500
 `;
 
-// You can nest ud inside other ud or utld
+// You can nest `ud` inside other `ud` or `utld`.
 const Container = utld.div`
   ${ud`
     text-red-500
@@ -89,7 +93,7 @@ const Container = utld.div`
 `;
 ```
 
-You also can use nested array.
+You can also use nested arrays.
 
 ```ts
 const Container = utld.div`
@@ -99,7 +103,7 @@ const Container = utld.div`
 
 ## Pass Props to Component
 
-You can pass props to `utld` component using generics.
+You can pass props to the `utld` component using generics.
 
 ```tsx
 const Container = utld.div<{ type: "red" | "blue" }>`
@@ -131,11 +135,35 @@ const Page = () => {
 };
 ```
 
-> For now, it's unable to use this feature in `wd`
+> Currently, this feature is not available in `ud`.
 
-## Setup Tailwind CSS IntelliSense for `utility-class-components`
+## Handle `ForwardRefExoticComponent`
 
-If you've installed ["Tailwind CSS IntelliSense"](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) extenstion on VSCode, you can enable autocompletion inside `utld` and `ud`.
+You can also pass a `ForwardRefExoticComponent` to `utld`, which can be created using `React.forwardRef`.
+
+```tsx
+const ForwardedInput = React.forwardRef<HTMLInputElement, ComponentPropsWithoutRef<"input">>(
+  (props, ref) => {
+    return <input ref={ref} {...props} />;
+  },
+);
+
+const Input = utld(ForwardedInput)`
+  bg-red-500
+`;
+
+const Page = () => {
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
+  return <Input ref={inputRef} />;
+};
+```
+
+---
+
+## Setting up Tailwind CSS IntelliSense for `utility-class-components`
+
+If you have installed the ["Tailwind CSS IntelliSense"](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) extenstion in VSCode, you can enable autocompletion inside `utld` and `ud`.
 
 Add the following to your `settings.json`:
 
@@ -147,6 +175,8 @@ Add the following to your `settings.json`:
   ]
 }
 ```
+
+---
 
 ## ToDos
 
