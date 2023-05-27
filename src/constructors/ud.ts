@@ -2,6 +2,9 @@ import type { ClassValue } from "../types";
 
 import { cx } from "./cx";
 
+/**
+ * Resolves template to style string
+ */
 export const ud = (template: TemplateStringsArray, ...templateElements: ClassValue[]) => {
   return template
     .reduce((sum, n, index) => {

@@ -4,6 +4,9 @@ import { isNotEmptyString } from "../utils";
 const _cxArrayToString = (target: ClassValue[]): string =>
   target.map((value) => cx(value)).join(" ");
 
+/**
+ * Concats class names
+ */
 export const cx = (...values: ClassValue[]): string => {
   return values
     .reduce<string>((sum, value) => {
