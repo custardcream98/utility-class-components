@@ -39,8 +39,7 @@ npm i utility-class-components
 
 ## Table Of Contents
 
-- [utility-class-components](#utility-class-components)
-  - [Installation](#installation)
+- [Installation](#installation)
 - [Utility Class](#utility-class)
 - [Usage](#usage)
   - [`utld`](#-utld-)
@@ -51,13 +50,12 @@ npm i utility-class-components
 - [Setting up](#setting-up)
   - [Setting up Tailwind CSS IntelliSense for `utility-class-components`](#setting-up-tailwind-css-intellisense-for--utility-class-components-)
 - [Experimental Features](#experimental-features)
-  - [Experimental Feature: Grouping Variants](#experimental-feature--grouping-variants)
+  - [Experimental Feature: Grouping Variants](#experimental-feature-grouping-variants)
+- [Avoid constructing class names dynamically](#avoid-constructing-class-names-dynamically)
 
 # Utility Class
 
 You can use any library you want: TailwindCSS, UnoCSS, WindiCSS.
-
-However, unlike CSS-in-JS libraries, **you can't use dynamic styles**. Due to the limitations of utility class libraries, it is not possible to create dynamic style classes.
 
 # Usage
 
@@ -245,6 +243,18 @@ module.exports = {
 ```
 
 > CAUTION: This may cause some issues.
+
+---
+
+# Avoid constructing class names dynamically
+
+When using utility class libraries, it's important to note that **dynamic styles cannot be used** due to the limitations of such libraries.
+
+```js
+const style = `w-${width}`; // ❌
+
+const style = "w-[100px]"; // 👌👌
+```
 
 ---
 
