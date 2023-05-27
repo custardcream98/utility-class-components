@@ -1,36 +1,37 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DOM_ELEMENTS, type DomElements } from "../constants";
-import type { ClassValue } from "../types";
 
-import { cx } from "./cx";
-import { ud } from "./ud";
+import { DOM_ELEMENT_TAGS_SET } from "../constants";
+import type { PropsOf, SetElements } from "../types/helper";
+import { isIntrinsicElementKey } from "../utils";
 
-import { type ComponentPropsWithoutRef, createElement, forwardRef } from "react";
+import { createUtldComponent, createUtldHTMLComponent, UtldHtmlComponent } from "./create";
 
-const _utld = <C extends keyof JSX.IntrinsicElements | React.ComponentType<any>>(tag: C) => {
-  const windStyle = (template: TemplateStringsArray, ...templateElements: ClassValue[]) => {
-    const classToConcat = ud(template, ...templateElements);
+import React from "react";
 
-    const TailwindComponent = forwardRef<any, ComponentPropsWithoutRef<C>>(
-      function TailwindComponentForwarded({ children, className, ...restProps }, ref) {
-        const style = cx(classToConcat, className);
+const _utld = <C extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>>(
+  component: C,
+) => {
+  if (isIntrinsicElementKey(component)) {
+    return createUtldHTMLComponent<typeof component>(component);
+  }
 
-        return createElement(tag, { className: style, ref, ...restProps }, children);
-      },
-    );
-
-    return TailwindComponent;
-  };
-
-  return windStyle;
+  return createUtldComponent<React.ComponentType<PropsOf<C>>>(component);
 };
 
-export type UtldReturntype = ReturnType<typeof _utld>;
-export type UtldPredifined = Record<DomElements, UtldReturntype>;
+type PredefinedUtldHTMLComponents = {
+  [tag in SetElements<typeof DOM_ELEMENT_TAGS_SET>]: UtldHtmlComponent<tag>;
+};
 
-const _utldPredifined = DOM_ELEMENTS.reduce<UtldPredifined>((obj, tag) => {
-  obj[tag] = _utld(tag);
-  return obj;
-}, {} as UtldPredifined);
+const generatePredefinedUtldHTMLComponent = () => {
+  return [...DOM_ELEMENT_TAGS_SET].reduce(
+    (obj, tag) => ({
+      ...obj,
+      [tag]: createUtldHTMLComponent(tag),
+    }),
+    {} as PredefinedUtldHTMLComponents,
+  );
+};
 
-export const utld = Object.assign(_utld, _utldPredifined);
+const _predefinedUtldHTMLComponents = generatePredefinedUtldHTMLComponent();
+
+export const utld = Object.assign(_utld, _predefinedUtldHTMLComponents);
