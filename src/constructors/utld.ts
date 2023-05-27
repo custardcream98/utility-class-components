@@ -2,12 +2,12 @@
 
 import { DOM_ELEMENT_TAGS_SET } from "../constants";
 import type { PropsOf, SetElements } from "../types/helper";
-import { isIntrinsicElementKey } from "../utils";
+import { isForwardedComponent, isIntrinsicElementKey } from "../utils";
 
 import {
   createUtldComponent,
-  createUtldHTMLComponent,
-  type UtldTaggedHtmlComponent,
+  createUtldForwardedComponent,
+  type UtldHtmlForwardedComponent,
 } from "./create";
 
 import React from "react";
@@ -18,11 +18,16 @@ import React from "react";
  * @param component A React Component or HTML tag name
  * @returns utld component
  */
-const _utld = <C extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>>(
+const _utld = <
+  C extends
+    | keyof JSX.IntrinsicElements
+    | React.ForwardRefExoticComponent<any>
+    | React.JSXElementConstructor<any>,
+>(
   component: C,
 ) => {
-  if (isIntrinsicElementKey(component)) {
-    return createUtldHTMLComponent<typeof component>(component);
+  if (isIntrinsicElementKey(component) || isForwardedComponent(component)) {
+    return createUtldForwardedComponent<typeof component>(component);
   }
 
   return createUtldComponent<React.ComponentType<PropsOf<C>>>(component);
@@ -32,14 +37,14 @@ const _utld = <C extends keyof JSX.IntrinsicElements | React.JSXElementConstruct
  * Predefined Utld HTML Components
  */
 export type PredefinedUtldHTMLComponents = {
-  [tag in SetElements<typeof DOM_ELEMENT_TAGS_SET>]: UtldTaggedHtmlComponent<tag>;
+  [Tag in SetElements<typeof DOM_ELEMENT_TAGS_SET>]: UtldHtmlForwardedComponent<Tag>;
 };
 
 const generatePredefinedUtldHTMLComponent = () => {
   return [...DOM_ELEMENT_TAGS_SET].reduce(
     (obj, tag) => ({
       ...obj,
-      [tag]: createUtldHTMLComponent(tag),
+      [tag]: createUtldForwardedComponent(tag),
     }),
     {} as PredefinedUtldHTMLComponents,
   );

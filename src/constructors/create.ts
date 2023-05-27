@@ -1,20 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { ClassValue } from "../types";
-import type { PropsOf } from "../types/helper";
+import type { ClassValueOrUtldTemplateCallback } from "../types";
+import type { PropsOf, PropsOfForwardRefExoticComponent } from "../types/helper";
 
 import { cx } from "./cx";
 import { ud } from "./ud";
 
 import React from "react";
-
-export type UtldTemplateCallback<AdditionalProps> = (props: AdditionalProps) => string;
-/**
- * utld template element can be a ClassValue or a callback function
- */
-export type ClassValueOrUtldTemplateCallback<AdditionalProps> =
-  | ClassValue
-  | UtldTemplateCallback<AdditionalProps>;
 
 /**
  * Resolve utld template to style string
@@ -33,7 +25,7 @@ const _getResolvedStyle = <AdditionalProps>(
 ): string => {
   const resolvedTemplateElements = templateElements.map((templateElement) => {
     if (typeof templateElement === "function") {
-      return templateElement(utldProps as unknown as AdditionalProps);
+      return templateElement(utldProps);
     }
 
     return templateElement;
@@ -74,7 +66,7 @@ export const createUtldComponent =
     return UtldComponent;
   };
 
-export type UtldTaggedHtmlComponent<Tag extends keyof JSX.IntrinsicElements> = <
+export type UtldHtmlForwardedComponent<Tag extends keyof JSX.IntrinsicElements> = <
   AdditionalProps extends Record<string, any> = {},
 >(
   template: TemplateStringsArray,
@@ -84,18 +76,20 @@ export type UtldTaggedHtmlComponent<Tag extends keyof JSX.IntrinsicElements> = <
     React.RefAttributes<JSX.IntrinsicElements[Tag]>
 >;
 
-export const createUtldHTMLComponent =
-  <Tag extends keyof JSX.IntrinsicElements>(tag: Tag) =>
+export const createUtldForwardedComponent =
+  <ToC extends React.ForwardRefExoticComponent<any> | keyof JSX.IntrinsicElements>(
+    tagOrComponent: ToC,
+  ) =>
   <AdditionalProps extends Record<string, any> = {}>(
     template: TemplateStringsArray,
     ...templateElements: Array<ClassValueOrUtldTemplateCallback<AdditionalProps>>
-  ): React.ForwardRefExoticComponent<
-    React.PropsWithoutRef<React.PropsWithoutRef<React.ComponentProps<Tag>> & AdditionalProps> &
-      React.RefAttributes<JSX.IntrinsicElements[Tag]>
-  > =>
+  ) =>
     React.forwardRef<
-      JSX.IntrinsicElements[Tag],
-      React.ComponentPropsWithoutRef<Tag> & AdditionalProps
+      ToC extends keyof JSX.IntrinsicElements ? JSX.IntrinsicElements[ToC] : ToC,
+      (ToC extends keyof JSX.IntrinsicElements
+        ? React.ComponentPropsWithoutRef<ToC>
+        : PropsOfForwardRefExoticComponent<ToC>) &
+        AdditionalProps
     >(function UtldComponentForwarded({ children, className, ...restProps }, ref) {
       const style = _getResolvedStyle(
         restProps as unknown as AdditionalProps,
@@ -104,9 +98,17 @@ export const createUtldHTMLComponent =
         className,
       );
 
-      return React.createElement<React.ComponentProps<Tag>>(
-        tag,
-        { className: style, ref, ...(restProps as unknown as React.ComponentProps<Tag>) },
+      return React.createElement<
+        ToC extends keyof JSX.IntrinsicElements
+          ? React.ComponentProps<ToC>
+          : PropsOfForwardRefExoticComponent<ToC>
+      >(
+        tagOrComponent,
+        {
+          className: style,
+          ref,
+          ...restProps,
+        } as React.ComponentProps<ToC>,
         children,
       );
     });

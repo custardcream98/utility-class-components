@@ -8,3 +8,7 @@ export type PropsOf<C extends keyof JSX.IntrinsicElements | React.JSXElementCons
     : never;
 
 export type SetElements<TargetSet> = TargetSet extends Set<infer Element> ? Element : never;
+
+export type PropsOfForwardRefExoticComponent<T> = T extends React.ForwardRefExoticComponent<infer P>
+  ? P
+  : never;
