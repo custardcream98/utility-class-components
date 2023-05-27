@@ -170,7 +170,7 @@ Add the following to your `settings.json`:
 ```json
 {
   "tailwindCSS.experimental.classRegex": [
-    "utld(?:\\.[a-z]*|\\([^)]*\\))(?:<[^>]*>|)`([^`]*)`",
+    "utld(?:\\.[a-z0-9]*|\\([^)]*\\))(?:<[^>]*>|)`([^`]*)`",
     "ud`([^`]*)`"
   ]
 }
