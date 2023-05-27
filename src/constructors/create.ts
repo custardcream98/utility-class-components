@@ -8,12 +8,27 @@ import { ud } from "./ud";
 
 import React from "react";
 
-type UtldTemplateCallback<AdditionalProps> = (props: AdditionalProps) => string;
+export type UtldTemplateCallback<AdditionalProps> = (props: AdditionalProps) => string;
+/**
+ * utld template element can be a ClassValue or a callback function
+ */
+export type ClassValueOrUtldTemplateCallback<AdditionalProps> =
+  | ClassValue
+  | UtldTemplateCallback<AdditionalProps>;
 
+/**
+ * Resolve utld template to style string
+ *
+ * @param utldProps additional props for utld template callback
+ * @param template template strings
+ * @param templateElements utld template elements (can be a ClassValue or a callback function)
+ * @param className className to concat
+ * @returns resolved style
+ */
 const _getResolvedStyle = <AdditionalProps>(
   utldProps: AdditionalProps,
   template: TemplateStringsArray,
-  templateElements: Array<ClassValue | UtldTemplateCallback<AdditionalProps>>,
+  templateElements: Array<ClassValueOrUtldTemplateCallback<AdditionalProps>>,
   className?: string,
 ): string => {
   const resolvedTemplateElements = templateElements.map((templateElement) => {
@@ -35,7 +50,7 @@ export const createUtldComponent =
   <C extends React.JSXElementConstructor<any>>(component: C) =>
   <AdditionalProps extends Record<string, any> = {}>(
     template: TemplateStringsArray,
-    ...templateElements: Array<ClassValue | UtldTemplateCallback<AdditionalProps>>
+    ...templateElements: Array<ClassValueOrUtldTemplateCallback<AdditionalProps>>
   ) => {
     const UtldComponent = ({
       children,
@@ -59,20 +74,21 @@ export const createUtldComponent =
     return UtldComponent;
   };
 
-export type UtldHtmlComponent<Tag extends keyof JSX.IntrinsicElements> = <
+export type UtldTaggedHtmlComponent<Tag extends keyof JSX.IntrinsicElements> = <
   AdditionalProps extends Record<string, any> = {},
 >(
   template: TemplateStringsArray,
-  ...templateElements: Array<ClassValue | UtldTemplateCallback<AdditionalProps>>
+  ...templateElements: Array<ClassValueOrUtldTemplateCallback<AdditionalProps>>
 ) => React.ForwardRefExoticComponent<
   React.PropsWithoutRef<React.PropsWithoutRef<React.ComponentProps<Tag>> & AdditionalProps> &
     React.RefAttributes<JSX.IntrinsicElements[Tag]>
 >;
+
 export const createUtldHTMLComponent =
   <Tag extends keyof JSX.IntrinsicElements>(tag: Tag) =>
   <AdditionalProps extends Record<string, any> = {}>(
     template: TemplateStringsArray,
-    ...templateElements: Array<ClassValue | UtldTemplateCallback<AdditionalProps>>
+    ...templateElements: Array<ClassValueOrUtldTemplateCallback<AdditionalProps>>
   ): React.ForwardRefExoticComponent<
     React.PropsWithoutRef<React.PropsWithoutRef<React.ComponentProps<Tag>> & AdditionalProps> &
       React.RefAttributes<JSX.IntrinsicElements[Tag]>

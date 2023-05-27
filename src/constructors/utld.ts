@@ -4,10 +4,20 @@ import { DOM_ELEMENT_TAGS_SET } from "../constants";
 import type { PropsOf, SetElements } from "../types/helper";
 import { isIntrinsicElementKey } from "../utils";
 
-import { createUtldComponent, createUtldHTMLComponent, UtldHtmlComponent } from "./create";
+import {
+  createUtldComponent,
+  createUtldHTMLComponent,
+  type UtldTaggedHtmlComponent,
+} from "./create";
 
 import React from "react";
 
+/**
+ * Core utld function
+ *
+ * @param component A React Component or HTML tag name
+ * @returns utld component
+ */
 const _utld = <C extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>>(
   component: C,
 ) => {
@@ -18,8 +28,11 @@ const _utld = <C extends keyof JSX.IntrinsicElements | React.JSXElementConstruct
   return createUtldComponent<React.ComponentType<PropsOf<C>>>(component);
 };
 
-type PredefinedUtldHTMLComponents = {
-  [tag in SetElements<typeof DOM_ELEMENT_TAGS_SET>]: UtldHtmlComponent<tag>;
+/**
+ * Predefined Utld HTML Components
+ */
+export type PredefinedUtldHTMLComponents = {
+  [tag in SetElements<typeof DOM_ELEMENT_TAGS_SET>]: UtldTaggedHtmlComponent<tag>;
 };
 
 const generatePredefinedUtldHTMLComponent = () => {
