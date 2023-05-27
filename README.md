@@ -178,6 +178,47 @@ Add the following to your `settings.json`:
 
 ---
 
+## Experimental Feature: Grouping Variants
+
+You can group variants like this:
+
+```ts
+export const Link = utld.a`
+  transition-colors
+  hover:(text-accent-light dark:text-accent-dark)
+`;
+```
+
+This will be transformed into `"transition-colors hover:text-accent-light hoverdark:text-accent-dark)"` in runtime.
+
+To enable this feature, you need to add a transformer to the utility class library you are using. This transformer will allow the library to generate styles for `hover:text-accent-light hoverdark:text-accent-dark`.
+
+For example, if you are using TailwindCSS, you can add the following code to `tailwind.config.js`.
+
+```js
+const { transformGroupSelector } = require("utility-class-components");
+
+module.exports = {
+  content: {
+    files: [
+      // your target files
+    ],
+    transform: {
+      tsx: (code) => {
+        code = transformGroupSelector(code);
+        return code;
+      },
+      // add jsx if you are using it
+    },
+  },
+  // ...
+};
+```
+
+> CAUTION: This may cause some issues.
+
+---
+
 ## ToDos
 
 - Add conditional style feature
