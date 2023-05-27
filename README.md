@@ -37,11 +37,29 @@ npm i utility-class-components
 # or yarn add utility-class-components
 ```
 
-## Utility Class
+## Table Of Contents
+
+- [utility-class-components](#utility-class-components)
+  - [Installation](#installation)
+- [Utility Class](#utility-class)
+- [Usage](#usage)
+  - [`utld`](#-utld-)
+  - [`ud`](#-ud-)
+  - [Array Styles](#array-styles)
+  - [Pass Props to Component](#pass-props-to-component)
+  - [Handle `ForwardRefExoticComponent`](#handle--forwardrefexoticcomponent-)
+- [Setting up](#setting-up)
+  - [Setting up Tailwind CSS IntelliSense for `utility-class-components`](#setting-up-tailwind-css-intellisense-for--utility-class-components-)
+- [Experimental Features](#experimental-features)
+  - [Experimental Feature: Grouping Variants](#experimental-feature--grouping-variants)
+
+# Utility Class
 
 You can use any library you want: TailwindCSS, UnoCSS, WindiCSS.
 
 However, unlike CSS-in-JS libraries, **you can't use dynamic styles**. Due to the limitations of utility class libraries, it is not possible to create dynamic style classes.
+
+# Usage
 
 ## `utld`
 
@@ -161,6 +179,8 @@ const Page = () => {
 
 ---
 
+# Setting up
+
 ## Setting up Tailwind CSS IntelliSense for `utility-class-components`
 
 If you have installed the ["Tailwind CSS IntelliSense"](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) extenstion in VSCode, you can enable autocompletion inside `utld` and `ud`.
@@ -178,20 +198,29 @@ Add the following to your `settings.json`:
 
 ---
 
+# Experimental Features
+
 ## Experimental Feature: Grouping Variants
 
 You can group variants like this:
 
 ```ts
 export const Link = utld.a`
-  transition-colors
   hover:(text-accent-light dark:text-accent-dark)
+`;
+
+// You can also break lines
+export const Box = utld.div`
+  hover:(
+    text-accent-light
+    dark:text-accent-dark
+  )
 `;
 ```
 
-This will be transformed into `"transition-colors hover:text-accent-light hover:dark:text-accent-dark)"` in runtime.
+This will be transformed into `"transition-colors hover:text-accent-light hover:dark:text-accent-dark)"` **in runtime**.
 
-To enable this feature, you need to add a transformer to the utility class library you are using. This transformer will allow the library to generate styles for `hover:text-accent-light hover:dark:text-accent-dark`.
+To enable this feature, **you need to add a transformer** to the utility class library you are using. This transformer will allow the library to generate styles for `hover:text-accent-light hover:dark:text-accent-dark`.
 
 For example, if you are using TailwindCSS, you can add the following code to `tailwind.config.js`.
 
@@ -219,7 +248,7 @@ module.exports = {
 
 ---
 
-## ToDos
+# ToDos
 
 - Add conditional style feature
   ```ts
