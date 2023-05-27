@@ -189,9 +189,9 @@ export const Link = utld.a`
 `;
 ```
 
-This will be transformed into `"transition-colors hover:text-accent-light hoverdark:text-accent-dark)"` in runtime.
+This will be transformed into `"transition-colors hover:text-accent-light hover:dark:text-accent-dark)"` in runtime.
 
-To enable this feature, you need to add a transformer to the utility class library you are using. This transformer will allow the library to generate styles for `hover:text-accent-light hoverdark:text-accent-dark`.
+To enable this feature, you need to add a transformer to the utility class library you are using. This transformer will allow the library to generate styles for `hover:text-accent-light hover:dark:text-accent-dark`.
 
 For example, if you are using TailwindCSS, you can add the following code to `tailwind.config.js`.
 
