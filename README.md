@@ -42,6 +42,8 @@ However, unlike CSS-in-JS libraries, **you can't use dynamic styles**. Due to th
 ## `utld`
 
 ```ts
+import { utld } from "utility-class-components";
+
 const Container = utld.div`
   flex
   text-bold
@@ -56,6 +58,8 @@ const RedContainer = utld(Container)`
 ## `ud`
 
 ```ts
+import { utld, ud } from "utility-class-components";
+
 const commonStyle = ud`
   text-red-500
   hover:text-blue-500
@@ -93,6 +97,42 @@ const Container = utld.div`
 `;
 ```
 
+## Pass Props to Component
+
+You can pass props to `utld` component using generics.
+
+```tsx
+const Container = utld.div<{ type: "red" | "blue" }>`
+  ${({ type }) => (type === "red" ? "bg-red-500" : "bg-blue-500")}
+  w-[100px]
+  h-[100px]
+`;
+
+const Page = () => {
+  return <Container type='red'>Hello</Container>;
+};
+```
+
+This also can be done using another React component.
+
+```tsx
+const Box = ({ className }: { className?: string }) => {
+  return <div>Hello</div>;
+};
+
+const Container = utld(Box)<{ type: "red" | "blue" }>`
+  ${({ type }) => (type === "red" ? "bg-red-500" : "bg-blue-500")}
+  w-[100px]
+  h-[100px]
+`;
+
+const Page = () => {
+  return <Container type='red'>Hello</Container>;
+};
+```
+
+> For now, it's unable to use this feature in `wd`
+
 ## Setup Tailwind CSS IntelliSense for `utility-class-components`
 
 If you've installed ["Tailwind CSS IntelliSense"](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) extenstion on VSCode, you can enable autocompletion inside `utld` and `ud`.
@@ -102,8 +142,7 @@ Add the following to your `settings.json`:
 ```json
 {
   "tailwindCSS.experimental.classRegex": [
-    "utld\\.[a-z]{1,}`([^`]*)`",
-    "utld\\([^)]{1,}\\)`([^`]*)`",
+    "utld(?:\\.[a-z]*|\\([^)]*\\))(?:<[^>]*>|)`([^`]*)`",
     "ud`([^`]*)`"
   ]
 }
