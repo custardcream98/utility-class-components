@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import type { ClassValueOrUtldTemplateCallback } from "../types";
+import { HTMLElementType } from "../types/dom";
 import type { PropsOf, PropsOfForwardRefExoticComponent } from "../types/helper";
 
 import { cx } from "./cx";
@@ -73,7 +74,7 @@ export type UtldHtmlForwardedComponent<Tag extends keyof JSX.IntrinsicElements> 
   ...templateElements: Array<ClassValueOrUtldTemplateCallback<AdditionalProps>>
 ) => React.ForwardRefExoticComponent<
   React.PropsWithoutRef<React.PropsWithoutRef<React.ComponentProps<Tag>> & AdditionalProps> &
-    React.RefAttributes<JSX.IntrinsicElements[Tag]>
+    React.RefAttributes<HTMLElementType<Tag>>
 >;
 
 export const createUtldForwardedComponent =
@@ -85,9 +86,9 @@ export const createUtldForwardedComponent =
     ...templateElements: Array<ClassValueOrUtldTemplateCallback<AdditionalProps>>
   ) =>
     React.forwardRef<
-      ToC extends keyof JSX.IntrinsicElements ? JSX.IntrinsicElements[ToC] : ToC,
+      ToC extends keyof JSX.IntrinsicElements ? HTMLElementType<ToC> : ToC,
       (ToC extends keyof JSX.IntrinsicElements
-        ? React.ComponentPropsWithoutRef<ToC>
+        ? JSX.IntrinsicElements[ToC]
         : PropsOfForwardRefExoticComponent<ToC>) &
         AdditionalProps
     >(function UtldComponentForwarded({ children, className, ...restProps }, ref) {
@@ -100,7 +101,7 @@ export const createUtldForwardedComponent =
 
       return React.createElement<
         ToC extends keyof JSX.IntrinsicElements
-          ? React.ComponentProps<ToC>
+          ? JSX.IntrinsicElements[ToC]
           : PropsOfForwardRefExoticComponent<ToC>
       >(
         tagOrComponent,
