@@ -1,6 +1,6 @@
 import { matchAll } from "../utils";
 
-const GROUP_SELECTOR_REGEX = /([^\s:-]*[:-])\(([^)]{1,})\)/g;
+const GROUP_SELECTOR_REGEX = /([^\s]*[:-])\(([^)]{1,})\)/g;
 
 /**
  * Transforms a variant group enclosed in parentheses to utility classes.
