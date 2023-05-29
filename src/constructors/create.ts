@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import type { ClassValueOrUtldTemplateCallback } from "../types";
-import { HTMLElementType } from "../types/dom";
+import type { HTMLElementType } from "../types/dom";
 import type { PropsOf, PropsOfForwardRefExoticComponent } from "../types/helper";
 
 import { cx } from "./cx";
@@ -73,24 +73,48 @@ export type UtldHtmlForwardedComponent<Tag extends keyof JSX.IntrinsicElements> 
   template: TemplateStringsArray,
   ...templateElements: Array<ClassValueOrUtldTemplateCallback<AdditionalProps>>
 ) => React.ForwardRefExoticComponent<
-  React.PropsWithoutRef<React.PropsWithoutRef<React.ComponentProps<Tag>> & AdditionalProps> &
+  React.PropsWithoutRef<React.ComponentProps<Tag> & AdditionalProps> &
     React.RefAttributes<HTMLElementType<Tag>>
 >;
 
+export type UtldForwardedComponent<FC extends React.ForwardRefExoticComponent<any>> = <
+  AdditionalProps extends Record<string, any> = {},
+>(
+  template: TemplateStringsArray,
+  ...templateElements: Array<ClassValueOrUtldTemplateCallback<AdditionalProps>>
+) => React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<PropsOfForwardRefExoticComponent<FC> & AdditionalProps> &
+    React.RefAttributes<FC>
+>;
+
+export type UtldComponent<C extends React.JSXElementConstructor<any>> = <
+  AdditionalProps extends Record<string, any> = {},
+>(
+  template: TemplateStringsArray,
+  ...templateElements: Array<ClassValueOrUtldTemplateCallback<AdditionalProps>>
+) => React.ComponentType<PropsOf<C> & AdditionalProps & { className?: string }>;
+
 export const createUtldForwardedComponent =
-  <ToC extends React.ForwardRefExoticComponent<any> | keyof JSX.IntrinsicElements>(
+  <
+    ToC extends React.ForwardRefExoticComponent<any> | keyof JSX.IntrinsicElements,
+    DefaultProps = ToC extends keyof JSX.IntrinsicElements
+      ? JSX.IntrinsicElements[ToC]
+      : ToC extends React.ForwardRefExoticComponent<infer P>
+      ? P
+      : never,
+  >(
     tagOrComponent: ToC,
   ) =>
   <AdditionalProps extends Record<string, any> = {}>(
     template: TemplateStringsArray,
     ...templateElements: Array<ClassValueOrUtldTemplateCallback<AdditionalProps>>
-  ) =>
+  ): React.ForwardRefExoticComponent<
+    React.PropsWithoutRef<DefaultProps & AdditionalProps> &
+      React.RefAttributes<ToC extends keyof JSX.IntrinsicElements ? HTMLElementType<ToC> : ToC>
+  > =>
     React.forwardRef<
       ToC extends keyof JSX.IntrinsicElements ? HTMLElementType<ToC> : ToC,
-      (ToC extends keyof JSX.IntrinsicElements
-        ? JSX.IntrinsicElements[ToC]
-        : PropsOfForwardRefExoticComponent<ToC>) &
-        AdditionalProps
+      DefaultProps & AdditionalProps
     >(function UtldComponentForwarded({ children, className, ...restProps }, ref) {
       const style = _getResolvedStyle(
         restProps as unknown as AdditionalProps,
