@@ -200,14 +200,14 @@ Add the following to your `settings.json`:
 
 ## Experimental Feature: Grouping Variants
 
-You can group variants like this:
+You can group variants in the following way :
 
 ```ts
 export const Link = utld.a`
   hover:(text-accent-light dark:text-accent-dark)
 `;
 
-// You can also break lines
+// Line breaks can also be added
 export const Box = utld.div`
   hover:(
     text-accent-light
@@ -216,11 +216,11 @@ export const Box = utld.div`
 `;
 ```
 
-This will be transformed into `"transition-colors hover:text-accent-light hover:dark:text-accent-dark)"` **in runtime**.
+**During runtime,** this will be transformed into `"transition-colors hover:text-accent-light hover:dark:text-accent-dark)"`.
 
 To enable this feature, **you need to add a transformer** to the utility class library you are using. This transformer will allow the library to generate styles for `hover:text-accent-light hover:dark:text-accent-dark`.
 
-For example, if you are using TailwindCSS, you can add the following code to `tailwind.config.js`.
+For example, if you are using TailwindCSS, you can add the following code to your `tailwind.config.js` file:
 
 ```js
 const { transformGroupSelector } = require("utility-class-components");
@@ -243,6 +243,25 @@ module.exports = {
 ```
 
 > CAUTION: This may cause some issues.
+
+### Disabling `cssConflict` lint warning
+
+Furthermore, you should add the following configuration to your VSCode `settings.json` file:
+
+```json
+{
+  "tailwindCSS.lint.cssConflict": "ignore"
+}
+```
+
+This is necessary because Tailwind CSS IntelliSense is not aware of how grouping variants work. Please note that by disabling this lint, you will not receive warnings if you attempt to set conflicting styles.
+
+```jsx
+const Page = () => {
+  // The following className will not trigger a lint warning anymore.
+  return <div className='text-red-500 text-blue-500'>No Warning</div>;
+};
+```
 
 ---
 
