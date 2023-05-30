@@ -26,7 +26,11 @@ const _getResolvedStyle = <AdditionalProps>(
 ): string => {
   const resolvedTemplateElements = templateElements.map((templateElement) => {
     if (typeof templateElement === "function") {
-      return templateElement(utldProps);
+      const resolvedTemplateElement = templateElement(utldProps);
+      if (typeof resolvedTemplateElement === "boolean") {
+        return "";
+      }
+      return resolvedTemplateElement;
     }
 
     return templateElement;

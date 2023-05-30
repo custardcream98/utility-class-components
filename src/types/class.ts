@@ -2,7 +2,7 @@ export type ClassValue = ClassArray | string | number | null | boolean | undefin
 
 export type ClassArray = ClassValue[];
 
-export type UtldTemplateCallback<AdditionalProps> = (props: AdditionalProps) => string;
+export type UtldTemplateCallback<AdditionalProps> = (props: AdditionalProps) => string | boolean;
 
 /**
  * utld template element can be a ClassValue or a callback function
