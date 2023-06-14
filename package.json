@@ -3,7 +3,7 @@
   "bugs": {
     "url": "https://github.com/custardcream98/utility-class-components/issues"
   },
-  "description": "Utility Class React Component Library",
+  "description": "Build React components using utility classes in the styled-components way!",
   "dependencies": {
     "react": "^16.0.0"
   },
