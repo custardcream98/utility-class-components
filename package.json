@@ -43,10 +43,10 @@
     "url": "git+https://github.com/custardcream98/utility-class-components.git"
   },
   "scripts": {
-    "deploy": "yarn rollup && yarn publish",
+    "deploy": "yarn build && yarn publish",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
-    "rollup": "rm -rf ./dist && rollup -c"
+    "build": "rm -rf ./dist && rollup -c"
   },
   "sideEffects": false,
   "types": "dist/index.d.ts",
