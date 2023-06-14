@@ -2,7 +2,7 @@ import type { ClassValueOrUtldTemplateCallback } from "../types";
 import type { HTMLElementType } from "../types/dom";
 import type { PropsOf, PropsOfForwardRefExoticComponent } from "../types/helper";
 
-import { getResolvedStyle } from "./resolve";
+import { getResolvedProps, getResolvedStyle } from "./resolve";
 
 import React from "react";
 
@@ -24,9 +24,11 @@ export const createUtldComponent =
         className,
       );
 
+      const resolvedProps = getResolvedProps<PropsOf<C>>(restProps);
+
       return React.createElement<PropsOf<C>>(
         component,
-        { className: style, ...(restProps as unknown as PropsOf<C>) },
+        { className: style, ...resolvedProps },
         children,
       );
     };
@@ -63,6 +65,8 @@ export const createUtldForwardedComponent =
         className,
       );
 
+      const resolvedProps = getResolvedProps<React.ComponentProps<ToC>>(restProps);
+
       return React.createElement<
         ToC extends keyof JSX.IntrinsicElements
           ? JSX.IntrinsicElements[ToC]
@@ -72,8 +76,8 @@ export const createUtldForwardedComponent =
         {
           className: style,
           ref,
-          ...restProps,
-        } as React.ComponentProps<ToC>,
+          ...resolvedProps,
+        },
         children,
       );
     });
