@@ -1,30 +1,62 @@
-# utility-class-components
+<a name="readme-top"></a>
 
-Build React components using utility classes in the `styled-components` way!
+<div align="center">
+  <h3 align="center">utility-class-components</h3>
+
+  <p align="center">
+    Build React components using utility classes in the <code>styled-components</code> way!
+    <br />
+    <br />
+    <strong>✅ Use any library you want: TailwindCSS, UnoCSS, WindiCSS</strong>
+    <br />
+    <strong>✅ Server Component is fully supported</strong>
+    <br />
+    <br />
+  </p>
+</div>
 
 ```tsx
 import { utld, ud } from "utility-class-components";
 
 const boxStyle = ud`
-  w-[100px]
-  h-[100px]
+  w-50
+  h-50
 
   bg-red
 `;
 
-const Container = utld.div<{ isRed: boolean }>`
+const Container = utld.div<{ $isRed: boolean }>`
   flex
   text-bold
 
   ${boxStyle}
 
-  ${({ isRed }) => isRed && "text-red-500"}
+  ${({ $isRed }) => $isRed && "text-red-500"}
 `;
 
 function Page() {
-  return <Container isRed={true}>AWESOME!!</Container>;
+  return <Container $isRed={true}>AWESOME!!</Container>;
 }
 ```
+
+---
+
+#### Table Of Contents
+
+- [Installation](#installation)
+- [Setting up](#setting-up)
+  - [Setting up Tailwind CSS IntelliSense for `utility-class-components`](#setting-up-tailwind-css-intellisense-for-utility-class-components)
+- [Usage](#usage)
+  - [`utld`](#utld)
+  - [`ud`](#ud)
+  - [Array Styles](#array-styles)
+  - [Pass Props to Component](#pass-props-to-component)
+  - [Handle `ForwardRefExoticComponent`](#handle-forwardrefexoticcomponent)
+  - [Make sure certain props are not passed or rendered](#make-sure-certain-props-are-not-passed-or-rendered)
+- [Experimental Features](#experimental-features)
+  - [Experimental Feature: Grouping Variants](#experimental-feature-grouping-variants)
+    - [Disabling `cssConflict` lint warning](#disabling-cssconflict-lint-warning)
+- [Acknowledgments](#acknowledgments)
 
 ---
 
@@ -37,29 +69,26 @@ npm i utility-class-components
 # or yarn add utility-class-components
 ```
 
-## Table Of Contents
+## Setting up
 
-- [Installation](#installation)
-- [Utility Class](#utility-class)
-- [Usage](#usage)
-  - [`utld`](#-utld-)
-  - [`ud`](#-ud-)
-  - [Array Styles](#array-styles)
-  - [Pass Props to Component](#pass-props-to-component)
-  - [Handle `ForwardRefExoticComponent`](#handle--forwardrefexoticcomponent-)
-- [Setting up](#setting-up)
-  - [Setting up Tailwind CSS IntelliSense for `utility-class-components`](#setting-up-tailwind-css-intellisense-for--utility-class-components-)
-- [Experimental Features](#experimental-features)
-  - [Experimental Feature: Grouping Variants](#experimental-feature-grouping-variants)
-- [Avoid constructing class names dynamically](#avoid-constructing-class-names-dynamically)
+### Setting up Tailwind CSS IntelliSense for `utility-class-components`
 
-# Utility Class
+If you have installed the ["Tailwind CSS IntelliSense"](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) extenstion in VSCode, you can enable autocompletion inside `utld` and `ud`.
 
-You can use any library you want: TailwindCSS, UnoCSS, WindiCSS.
+Add the following to your `settings.json`:
 
-# Usage
+```json
+{
+  "tailwindCSS.experimental.classRegex": [
+    "utld(?:\\.[a-z0-9]*|\\([^)]*\\))(?:<[^>]*>|)`([^`]*)`",
+    "ud`([^`]*)`"
+  ]
+}
+```
 
-## `utld`
+## Usage
+
+### `utld`
 
 ```ts
 import { utld } from "utility-class-components";
@@ -75,7 +104,7 @@ const RedContainer = utld(Container)`
 `;
 ```
 
-## `ud`
+### `ud`
 
 ```ts
 import { utld, ud } from "utility-class-components";
@@ -99,7 +128,7 @@ const Container = utld.div`
 `;
 ```
 
-## Array Styles
+### Array Styles
 
 You can use array in all template literals.
 
@@ -117,7 +146,7 @@ const Container = utld.div`
 `;
 ```
 
-## Pass Props to Component
+### Pass Props to Component
 
 You can pass props to the `utld` component using generics.
 
@@ -153,7 +182,7 @@ const Page = () => {
 
 > Currently, this feature is not available in `ud`.
 
-## Handle `ForwardRefExoticComponent`
+### Handle `ForwardRefExoticComponent`
 
 You can also pass a `ForwardRefExoticComponent` to `utld`, which can be created using `React.forwardRef`.
 
@@ -175,30 +204,24 @@ const Page = () => {
 };
 ```
 
----
+### Make sure certain props are not passed or rendered
 
-# Setting up
+If you want to prevent certain props from being passed to an underlying React component or rendered on a DOM element, you can prefix the prop name with a `$` (dollar sign).
 
-## Setting up Tailwind CSS IntelliSense for `utility-class-components`
-
-If you have installed the ["Tailwind CSS IntelliSense"](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) extenstion in VSCode, you can enable autocompletion inside `utld` and `ud`.
-
-Add the following to your `settings.json`:
-
-```json
-{
-  "tailwindCSS.experimental.classRegex": [
-    "utld(?:\\.[a-z0-9]*|\\([^)]*\\))(?:<[^>]*>|)`([^`]*)`",
-    "ud`([^`]*)`"
-  ]
-}
+```tsx
+const Box = utld.div<{ $isRed: boolean }>`
+  ${({ $isRed }) => $isRed === "red" && "bg-red-500"}
+  w-[100px]
+  h-[100px]
+`;
+// `$isRed` prop will not be rendered in the DOM
 ```
 
----
+> This feature is useful when you encounter the warning `React does not recognize the X prop on a DOM element.`
 
-# Experimental Features
+## Experimental Features
 
-## Experimental Feature: Grouping Variants
+### Experimental Feature: Grouping Variants
 
 You can group variants in the following way :
 
@@ -244,7 +267,7 @@ module.exports = {
 
 > CAUTION: This may cause some issues.
 
-### Disabling `cssConflict` lint warning
+#### Disabling `cssConflict` lint warning
 
 Furthermore, you should add the following configuration to your VSCode `settings.json` file:
 
@@ -263,9 +286,9 @@ const Page = () => {
 };
 ```
 
----
+## Acknowledgments
 
-# Avoid constructing class names dynamically
+### Avoid constructing class names dynamically
 
 When using utility class libraries, it's important to note that **dynamic styles cannot be used** due to the limitations of such libraries.
 
@@ -275,21 +298,4 @@ const style = `w-${width}`; // ❌
 const style = "w-[100px]"; // 👌👌
 ```
 
----
-
-# ToDos
-
-- Add conditional style feature
-  ```ts
-  type Props = {
-    type: "primary" | "secondary";
-  };
-  const Container = utld.div<Props>`
-    ${{
-      type: {
-        primary: ud`flex`,
-        secondary: ud`inline-block`,
-      },
-    }}
-  `;
-  ```
+<p align="right"><a href="#readme-top">🔼 back to top</a></p>
