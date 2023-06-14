@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import type { ClassValueOrUtldTemplateCallback } from "../types";
 import type { HTMLElementType } from "../types/dom";
 import type { PropsOf, PropsOfForwardRefExoticComponent } from "../types/helper";

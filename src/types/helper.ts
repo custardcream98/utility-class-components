@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 export type PropsOf<C extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>> =
   JSX.LibraryManagedAttributes<C, React.ComponentProps<C>>;
 

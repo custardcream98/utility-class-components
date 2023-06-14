@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { DOM_ELEMENT_TAGS_SET } from "../constants";
 
 export const isIntrinsicElementKey = (tag: unknown): tag is keyof JSX.IntrinsicElements => {

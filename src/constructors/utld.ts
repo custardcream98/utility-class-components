@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { DOM_ELEMENT_TAGS_SET } from "../constants";
 import type { SetElements } from "../types/helper";
 import { isForwardedComponent, isIntrinsicElementKey } from "../utils";
