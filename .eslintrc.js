@@ -5,7 +5,7 @@ module.exports = {
     node: true,
   },
   extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier"],
-  ignorePatterns: ["node_modules/"],
+  ignorePatterns: ["node_modules/", "dist/"],
   overrides: [],
   parser: "@typescript-eslint/parser",
   parserOptions: {
