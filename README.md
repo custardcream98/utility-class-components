@@ -210,7 +210,7 @@ If you want to prevent certain props from being passed to an underlying React co
 
 ```tsx
 const Box = utld.div<{ $isRed: boolean }>`
-  ${({ $isRed }) => $isRed === "red" && "bg-red-500"}
+  ${({ $isRed }) => $isRed && "bg-red-500"}
   w-[100px]
   h-[100px]
 `;
