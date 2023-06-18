@@ -298,4 +298,21 @@ const style = `w-${width}`; // ❌
 const style = "w-[100px]"; // 👌👌
 ```
 
+### Override Style using `!`
+
+To override the style of a utility class library, you may need to use the `!important` declaration.
+
+> Using libraries like [`tailwind-merge`](https://github.com/dcastil/tailwind-merge) could be a good option. However, since this library is not exclusively designed for Tailwind CSS, such a feature is not included.
+
+```tsx
+const Box = utld.div`
+  bg-red-500
+`;
+
+const StyledBox = utld(Box)`
+  !bg-green-500
+`;
+// You should use `!` to override the background color
+```
+
 <p align="right"><a href="#readme-top">🔼 back to top</a></p>
