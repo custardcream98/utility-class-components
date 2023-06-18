@@ -12,12 +12,15 @@ import React from "react";
  * @param component A React Component or HTML tag name
  * @returns utld component
  */
+function _utld<FwC extends React.ForwardRefExoticComponent<any>>(
+  forwardedComponent: FwC,
+): ReturnType<typeof createUtldForwardedComponent<FwC>>;
 function _utld<C extends React.JSXElementConstructor<any>>(
   component: C,
 ): ReturnType<typeof createUtldComponent<C>>;
-function _utld<C extends keyof JSX.IntrinsicElements | React.ForwardRefExoticComponent<any>>(
-  component: C,
-): ReturnType<typeof createUtldForwardedComponent<C>>;
+function _utld<Tag extends keyof JSX.IntrinsicElements>(
+  tag: Tag,
+): ReturnType<typeof createUtldForwardedComponent<Tag>>;
 function _utld<
   C extends
     | keyof JSX.IntrinsicElements
@@ -44,7 +47,7 @@ const generatePredefinedUtldHTMLComponent = () => {
   return [...DOM_ELEMENT_TAGS_SET].reduce(
     (obj, tag) => ({
       ...obj,
-      [tag]: createUtldForwardedComponent(tag),
+      [tag]: createUtldForwardedComponent<typeof tag>(tag),
     }),
     {} as PredefinedUtldHTMLComponents,
   );
