@@ -19,8 +19,8 @@
 import { utld, ud } from "utility-class-components";
 
 const boxStyle = ud`
-  w-50
-  h-50
+  w-32
+  h-32
 
   bg-red
 `;
@@ -121,8 +121,8 @@ const Container = utld.div`
     hover:text-blue-500
 
     ${ud`
-      w-[100px]
-      h-[100px]
+      w-32
+      h-32
     `}
   `}
 `;
@@ -153,8 +153,8 @@ You can pass props to the `utld` component using generics.
 ```tsx
 const Container = utld.div<{ type: "red" | "blue" }>`
   ${({ type }) => (type === "red" ? "bg-red-500" : "bg-blue-500")}
-  w-[100px]
-  h-[100px]
+  w-32
+  h-32
 `;
 
 const Page = () => {
@@ -171,8 +171,8 @@ const Box = ({ className }: { className?: string }) => {
 
 const Container = utld(Box)<{ type: "red" | "blue" }>`
   ${({ type }) => (type === "red" ? "bg-red-500" : "bg-blue-500")}
-  w-[100px]
-  h-[100px]
+  w-32
+  h-32
 `;
 
 const Page = () => {
@@ -211,8 +211,8 @@ If you want to prevent certain props from being passed to an underlying React co
 ```tsx
 const Box = utld.div<{ $isRed: boolean }>`
   ${({ $isRed }) => $isRed && "bg-red-500"}
-  w-[100px]
-  h-[100px]
+  w-32
+  h-32
 `;
 // `$isRed` prop will not be rendered in the DOM
 ```
