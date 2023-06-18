@@ -5,7 +5,7 @@
   },
   "description": "Build React components using utility classes in the styled-components way!",
   "peerDependencies": {
-    "react": "^16.0.0"
+    "react": ">= 16.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.0",

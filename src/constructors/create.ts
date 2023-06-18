@@ -51,7 +51,13 @@ export const createUtldForwardedComponent = <
     ...templateElements: Array<ClassValueOrUtldTemplateCallback<AdditionalProps>>
   ) => {
     return React.forwardRef<
-      ToC extends keyof JSX.IntrinsicElements ? HTMLElementType<ToC> : ToC,
+      ToC extends keyof JSX.IntrinsicElements
+        ? HTMLElementType<ToC>
+        : ToC extends React.ForwardRefExoticComponent<infer F>
+        ? F extends React.RefAttributes<infer R>
+          ? R
+          : never
+        : never,
       DefaultProps & AdditionalProps
     >(function UtldComponentForwarded({ children, className, ...restProps }, ref) {
       const style = getResolvedStyle(
