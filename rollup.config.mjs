@@ -1,14 +1,14 @@
+import packageJson from "./package.json" assert { type: "json" };
+
 import commonjs from "@rollup/plugin-commonjs";
-import resolve from "@rollup/plugin-node-resolve";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
-import fs from "fs";
 import dts from "rollup-plugin-dts";
-
-const packageJson = JSON.parse(fs.readFileSync("./package.json", { encoding: "utf-8" }));
 
 export default [
   {
+    external: ["react"],
     input: "src/index.ts",
     output: [
       {
@@ -22,7 +22,7 @@ export default [
         sourcemap: true,
       },
     ],
-    plugins: [resolve(), typescript({ tsconfig: "./tsconfig.json" }), commonjs(), terser()],
+    plugins: [nodeResolve(), typescript({ tsconfig: "./tsconfig.json" }), commonjs(), terser()],
   },
   {
     input: "dist/esm/types/index.d.ts",

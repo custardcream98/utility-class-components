@@ -4,7 +4,7 @@
     "url": "https://github.com/custardcream98/utility-class-components/issues"
   },
   "description": "Build React components using utility classes in the styled-components way!",
-  "dependencies": {
+  "peerDependencies": {
     "react": "^16.0.0"
   },
   "devDependencies": {
