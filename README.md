@@ -7,8 +7,10 @@
     Build React components using utility classes in the <code>styled-components</code> way!
     <br />
     <br />
-    <img src="https://deno.bundlejs.com/?q=utility-class-components,utility-class-components&treeshake=[*],[{+default+}]&badge=&badge-style=for-the-badge" alt='bundle size' height='23' />
-    <a href="https://badge.fury.io/js/utility-class-components"><img src="https://badge.fury.io/js/utility-class-components.svg" alt="npm version" height="23"></a>
+    <a href='https://bundlejs.com/?q=utility-class-components%2Cutility-class-components&treeshake=%5B*%5D%2C%5B%7B+default+%7D%5D'><img src="https://deno.bundlejs.com/?q=utility-class-components,utility-class-components&treeshake=[*],[{+default+}]&badge=&badge-style=for-the-badge" alt='bundle size' height='25' /></a>
+    <br />
+    <a href="https://www.npmjs.com/package/utility-class-components"><img src="https://badge.fury.io/js/utility-class-components.svg" alt="npm version" height="20"></a>
+    <a href='https://www.npmjs.com/package/utility-class-components'><img src='https://img.shields.io/npm/dt/utility-class-components' alt='npm downloads count badge' height='20'/></a>
     <br />
     <br />
     <strong>✅ Use any library you want: TailwindCSS, UnoCSS, WindiCSS</strong>
