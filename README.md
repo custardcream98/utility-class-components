@@ -30,7 +30,7 @@ const boxStyle = ud`
   w-32
   h-32
 
-  bg-red
+  bg-red-200
 `;
 
 const Container = utld.div<{ $isRed: boolean }>`
@@ -59,10 +59,10 @@ function Page() {
   - [`ud`](#ud)
   - [Array Styles](#array-styles)
   - [Pass Props to Component](#pass-props-to-component)
-  - [Handle `ForwardRefExoticComponent`](#handle-forwardrefexoticcomponent)
   - [Make sure certain props are not passed or rendered](#make-sure-certain-props-are-not-passed-or-rendered)
+  - [Handle `ForwardRefExoticComponent`](#handle-forwardrefexoticcomponent)
 - [Experimental Features](#experimental-features)
-  - [Experimental Feature: Grouping Variants](#experimental-feature-grouping-variants)
+  - [Grouping Variants](#grouping-variants)
     - [Disabling `cssConflict` lint warning](#disabling-cssconflict-lint-warning)
 - [Acknowledgments](#acknowledgments)
 
@@ -190,6 +190,21 @@ const Page = () => {
 
 > Currently, this feature is not available in `ud`.
 
+### Make sure certain props are not passed or rendered
+
+If you want to prevent certain props from being passed to an underlying React component or rendered on a DOM element, you can prefix the prop name with a `$` (dollar sign).
+
+```tsx
+const Box = utld.div<{ $isRed: boolean }>`
+  ${({ $isRed }) => $isRed && "bg-red-500"}
+  w-32
+  h-32
+`;
+// `$isRed` prop will not be rendered in the DOM
+```
+
+> This feature is useful when you encounter the warning `React does not recognize the X prop on a DOM element.`
+
 ### Handle `ForwardRefExoticComponent`
 
 You can also pass a `ForwardRefExoticComponent` to `utld`, which can be created using `React.forwardRef`.
@@ -212,24 +227,9 @@ const Page = () => {
 };
 ```
 
-### Make sure certain props are not passed or rendered
-
-If you want to prevent certain props from being passed to an underlying React component or rendered on a DOM element, you can prefix the prop name with a `$` (dollar sign).
-
-```tsx
-const Box = utld.div<{ $isRed: boolean }>`
-  ${({ $isRed }) => $isRed && "bg-red-500"}
-  w-32
-  h-32
-`;
-// `$isRed` prop will not be rendered in the DOM
-```
-
-> This feature is useful when you encounter the warning `React does not recognize the X prop on a DOM element.`
-
 ## Experimental Features
 
-### Experimental Feature: Grouping Variants
+### Grouping Variants
 
 You can group variants in the following way :
 
@@ -243,6 +243,17 @@ export const Box = utld.div`
   hover:(
     text-accent-light
     dark:text-accent-dark
+  )
+`;
+
+// You can nest grops
+export const NestedBox = utld.div`
+  hover:(
+    text-accent-light
+    dark:(
+      text-accent-dark
+      bg-red-500
+    )
   )
 `;
 ```
