@@ -159,14 +159,14 @@ const Container = utld.div`
 You can pass props to the `utld` component using generics.
 
 ```tsx
-const Container = utld.div<{ type: "red" | "blue" }>`
-  ${({ type }) => (type === "red" ? "bg-red-500" : "bg-blue-500")}
+const Container = utld.div<{ $type: "red" | "blue" }>`
+  ${({ $type }) => ($type === "red" ? "bg-red-500" : "bg-blue-500")}
   w-32
   h-32
 `;
 
 const Page = () => {
-  return <Container type='red'>Hello</Container>;
+  return <Container $type='red'>Hello</Container>;
 };
 ```
 
@@ -174,17 +174,17 @@ This also can be done using another React component.
 
 ```tsx
 const Box = ({ className }: { className?: string }) => {
-  return <div>Hello</div>;
+  return <div className={className}>Hello</div>;
 };
 
-const Container = utld(Box)<{ type: "red" | "blue" }>`
-  ${({ type }) => (type === "red" ? "bg-red-500" : "bg-blue-500")}
+const Container = utld(Box)<{ $type: "red" | "blue" }>`
+  ${({ $type }) => ($type === "red" ? "bg-red-500" : "bg-blue-500")}
   w-32
   h-32
 `;
 
 const Page = () => {
-  return <Container type='red'>Hello</Container>;
+  return <Container $type='red'>Hello</Container>;
 };
 ```
 
