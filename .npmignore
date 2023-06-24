@@ -6,13 +6,10 @@ node_modules
 yarn.lock
 yarn.error.log
 
-.npmignore
-
 .eslintrc.js
-
-tsconfig.json
-
+.gitignore
+.npmignore
+.npmrc
 prettier.config.js
-
-rollup.config.js
-
+rollup.config.mjs
+tsconfig.json
