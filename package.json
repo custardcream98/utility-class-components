@@ -5,14 +5,14 @@
   },
   "description": "Build React components using utility classes in the styled-components way!",
   "peerDependencies": {
-    "react": ">= 16.0.0"
+    "react": ">= 17.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.0",
     "@rollup/plugin-node-resolve": "^15.0.2",
     "@rollup/plugin-terser": "^0.4.3",
     "@rollup/plugin-typescript": "^11.1.1",
-    "@types/react": "^18.2.7",
+    "@types/react": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^5.59.7",
     "@typescript-eslint/parser": "^5.59.7",
     "eslint": "^8.41.0",
