@@ -1,7 +1,7 @@
 import type { ClassValueOrUtldTemplateCallback } from "../types";
-import type { HTMLElementType } from "../types/dom";
-import type { PropsOf } from "../types/helper";
+import type { ClassNameAttributes, PropsOf } from "../types/props";
 
+import type { InferedUtldForwardedComponentProps, UtldForwardedComponentRef } from "./_types";
 import { getResolvedProps, getResolvedStyle } from "./resolve";
 
 import React from "react";
@@ -15,7 +15,7 @@ export const createUtldComponent = <C extends React.JSXElementConstructor<any>>(
       children,
       className,
       ...restProps
-    }: React.PropsWithChildren<PropsOf<C> & AdditionalProps & { className?: string }>) => {
+    }: React.PropsWithChildren<PropsOf<C> & AdditionalProps & ClassNameAttributes>) => {
       const style = getResolvedStyle(
         restProps as unknown as AdditionalProps,
         template,
@@ -38,11 +38,6 @@ export const createUtldComponent = <C extends React.JSXElementConstructor<any>>(
 
 export const createUtldForwardedComponent = <
   ToC extends React.ForwardRefExoticComponent<any> | keyof JSX.IntrinsicElements,
-  DefaultProps = ToC extends keyof JSX.IntrinsicElements
-    ? JSX.IntrinsicElements[ToC]
-    : ToC extends React.ForwardRefExoticComponent<infer P>
-    ? P
-    : never,
 >(
   tagOrComponent: ToC,
 ) => {
@@ -51,14 +46,8 @@ export const createUtldForwardedComponent = <
     ...templateElements: Array<ClassValueOrUtldTemplateCallback<AdditionalProps>>
   ) => {
     return React.forwardRef<
-      ToC extends keyof JSX.IntrinsicElements
-        ? HTMLElementType<ToC>
-        : ToC extends React.ForwardRefExoticComponent<infer F>
-        ? F extends React.RefAttributes<infer R>
-          ? R
-          : never
-        : never,
-      DefaultProps & AdditionalProps
+      UtldForwardedComponentRef<ToC>,
+      InferedUtldForwardedComponentProps<ToC> & AdditionalProps
     >(function UtldComponentForwarded({ children, className, ...restProps }, ref) {
       const style = getResolvedStyle(
         restProps as unknown as AdditionalProps,
@@ -67,9 +56,9 @@ export const createUtldForwardedComponent = <
         className,
       );
 
-      const resolvedProps = getResolvedProps<React.ComponentProps<ToC>>(restProps);
+      const resolvedProps = getResolvedProps<InferedUtldForwardedComponentProps<ToC>>(restProps);
 
-      return React.createElement(
+      return React.createElement<InferedUtldForwardedComponentProps<ToC>>(
         tagOrComponent,
         {
           className: style,

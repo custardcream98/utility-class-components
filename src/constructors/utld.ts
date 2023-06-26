@@ -1,5 +1,5 @@
 import { DOM_ELEMENT_TAGS_SET } from "../constants";
-import type { SetElements } from "../types/helper";
+import type { SetElements } from "../types/set";
 import { isForwardedComponent, isIntrinsicElementKey } from "../utils";
 
 import { createUtldComponent, createUtldForwardedComponent } from "./create";
@@ -43,15 +43,16 @@ export type PredefinedUtldHTMLComponents = {
   >;
 };
 
-const generatePredefinedUtldHTMLComponent = () => {
-  return [...DOM_ELEMENT_TAGS_SET].reduce(
+export const utld = Object.assign(
+  _utld,
+  [...DOM_ELEMENT_TAGS_SET].reduce(
     (obj, tag) => ({
       ...obj,
       [tag]: createUtldForwardedComponent<typeof tag>(tag),
     }),
     {} as PredefinedUtldHTMLComponents,
-  );
-};
+  ),
+);
 
 const _predefinedUtldHTMLComponents = generatePredefinedUtldHTMLComponent();
 
