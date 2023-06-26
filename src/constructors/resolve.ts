@@ -3,6 +3,32 @@ import type { ClassValueOrUtldTemplateCallback } from "../types";
 import { ud } from "./ud";
 
 /**
+ * Resolve utld template elements
+ *
+ * @param utldProps additional props for utld template callback
+ * @param templateElements utld template elements (can be a ClassValue or a callback function)
+ * @returns resolved utld template elements
+ */
+const getResolvedTemplateElements = <AdditionalProps extends Record<string, any>>(
+  utldProps: AdditionalProps,
+  templateElements: Array<ClassValueOrUtldTemplateCallback<AdditionalProps>>,
+) => {
+  const resolvedTemplateElements = templateElements.map((templateElement) => {
+    if (typeof templateElement === "function") {
+      const resolvedTemplateElement = templateElement(utldProps);
+      if (typeof resolvedTemplateElement === "boolean") {
+        return "";
+      }
+      return resolvedTemplateElement;
+    }
+
+    return templateElement;
+  });
+
+  return resolvedTemplateElements;
+};
+
+/**
  * Resolve utld template to style string
  *
  * @param utldProps additional props for utld template callback
@@ -15,17 +41,7 @@ export const getResolvedStyle = <AdditionalProps extends Record<string, any>>(
   template: TemplateStringsArray,
   templateElements: Array<ClassValueOrUtldTemplateCallback<AdditionalProps>>,
 ): string => {
-  const resolvedTemplateElements = templateElements.map((templateElement) => {
-    if (typeof templateElement === "function") {
-      const resolvedTemplateElement = templateElement(utldProps);
-      if (typeof resolvedTemplateElement === "boolean") {
-        return "";
-      }
-      return resolvedTemplateElement;
-    }
-
-    return templateElement;
-  });
+  const resolvedTemplateElements = getResolvedTemplateElements(utldProps, templateElements);
 
   const resolvedStyle = ud(template, ...resolvedTemplateElements);
 
