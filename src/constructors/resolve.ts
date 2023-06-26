@@ -1,6 +1,5 @@
 import type { ClassValueOrUtldTemplateCallback } from "../types";
 
-import { cx } from "./cx";
 import { ud } from "./ud";
 
 /**
@@ -9,14 +8,12 @@ import { ud } from "./ud";
  * @param utldProps additional props for utld template callback
  * @param template template strings
  * @param templateElements utld template elements (can be a ClassValue or a callback function)
- * @param className className to concat
  * @returns resolved style
  */
 export const getResolvedStyle = <AdditionalProps extends Record<string, any>>(
   utldProps: AdditionalProps,
   template: TemplateStringsArray,
   templateElements: Array<ClassValueOrUtldTemplateCallback<AdditionalProps>>,
-  className?: string,
 ): string => {
   const resolvedTemplateElements = templateElements.map((templateElement) => {
     if (typeof templateElement === "function") {
@@ -30,11 +27,9 @@ export const getResolvedStyle = <AdditionalProps extends Record<string, any>>(
     return templateElement;
   });
 
-  const classToConcat = ud(template, ...resolvedTemplateElements);
+  const resolvedStyle = ud(template, ...resolvedTemplateElements);
 
-  const style = cx(classToConcat, className);
-
-  return style;
+  return resolvedStyle;
 };
 
 /**

@@ -2,6 +2,7 @@ import type { ClassValueOrUtldTemplateCallback } from "../types";
 import type { ClassNameAttributes, PropsOf } from "../types/props";
 
 import type { InferedUtldForwardedComponentProps, UtldForwardedComponentRef } from "./_types";
+import { cx } from "./cx";
 import { getResolvedProps, getResolvedStyle } from "./resolve";
 
 import React from "react";
@@ -16,18 +17,18 @@ export const createUtldComponent = <C extends React.JSXElementConstructor<any>>(
       className,
       ...restProps
     }: React.PropsWithChildren<PropsOf<C> & AdditionalProps & ClassNameAttributes>) => {
-      const style = getResolvedStyle(
+      const resolvedStyle = getResolvedStyle(
         restProps as unknown as AdditionalProps,
         template,
         templateElements,
-        className,
       );
+      const clx = cx(className, resolvedStyle);
 
       const resolvedProps = getResolvedProps<PropsOf<C>>(restProps);
 
       return React.createElement<PropsOf<C>>(
         component,
-        { className: style, ...resolvedProps },
+        { className: clx, ...resolvedProps },
         children,
       );
     };
@@ -49,19 +50,19 @@ export const createUtldForwardedComponent = <
       UtldForwardedComponentRef<ToC>,
       InferedUtldForwardedComponentProps<ToC> & AdditionalProps
     >(function UtldComponentForwarded({ children, className, ...restProps }, ref) {
-      const style = getResolvedStyle(
+      const resolvedStyle = getResolvedStyle(
         restProps as unknown as AdditionalProps,
         template,
         templateElements,
-        className,
       );
+      const clx = cx(className, resolvedStyle);
 
       const resolvedProps = getResolvedProps<InferedUtldForwardedComponentProps<ToC>>(restProps);
 
       return React.createElement<InferedUtldForwardedComponentProps<ToC>>(
         tagOrComponent,
         {
-          className: style,
+          className: clx,
           ref,
           ...resolvedProps,
         },
