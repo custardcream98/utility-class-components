@@ -53,7 +53,3 @@ export const utld = Object.assign(
     {} as PredefinedUtldHTMLComponents,
   ),
 );
-
-const _predefinedUtldHTMLComponents = generatePredefinedUtldHTMLComponent();
-
-export const utld = Object.assign(_utld, _predefinedUtldHTMLComponents);
