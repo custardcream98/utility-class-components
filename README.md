@@ -7,8 +7,6 @@
     Build React components using utility classes in the <code>styled-components</code> way!
     <br />
     <br />
-    <a href='https://bundlejs.com/?q=utility-class-components%2Cutility-class-components&treeshake=%5B*%5D%2C%5B%7B+default+%7D%5D'><img src="https://deno.bundlejs.com/?q=utility-class-components,utility-class-components&treeshake=[*],[{+default+}]&badge=&badge-style=for-the-badge" alt='bundle size' height='25' /></a>
-    <br />
     <a href="https://www.npmjs.com/package/utility-class-components"><img src="https://badge.fury.io/js/utility-class-components.svg" alt="npm version" height="20"></a>
     <a href='https://www.npmjs.com/package/utility-class-components'><img src='https://img.shields.io/npm/dt/utility-class-components' alt='npm downloads count badge' height='20'/></a>
     <br />
@@ -17,7 +15,7 @@
     <br />
     <strong>✅ Server Component is fully supported</strong>
     <br />
-    <strong>✅ Tiny bundle size <a target="_blank" href="https://bundlejs.com/?q=utility-class-components%2Cutility-class-components&treeshake=%5B*%5D%2C%5B%7B+default+%7D%5D">(4.89KB)</a></strong>
+    <strong>✅ Tiny bundle size <a target="_blank" href="https://bundlephobia.com/package/utility-class-components@0.2.4">(3.8KB)</a></strong>
     <br />
     <br />
   </p>
