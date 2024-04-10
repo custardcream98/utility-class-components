@@ -1,0 +1,45 @@
+{
+  "author": "shiwoo.park <custardcream@kakao.com>",
+  "bugs": {
+    "url": "https://github.com/custardcream98/utility-class-components/issues"
+  },
+  "description": "Build React components using utility classes in the styled-components way!",
+  "peerDependencies": {
+    "react": ">= 17.0.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "@rollup/plugin-terser": "^0.4.3",
+    "@rollup/plugin-typescript": "^11.1.1",
+    "@types/react": "^17.0.0",
+    "react": "^17.0.0",
+    "rollup": "^3.23.0",
+    "rollup-plugin-dts": "^5.3.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/custardcream98/utility-class-components#readme",
+  "keywords": [
+    "utility-class",
+    "react"
+  ],
+  "license": "MIT",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "name": "utility-class-components",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/custardcream98/utility-class-components.git"
+  },
+  "scripts": {
+    "deploy": "pnpm build && pnpm publish",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "build": "rm -rf ./dist && rollup -c"
+  },
+  "sideEffects": false,
+  "types": "dist/index.d.ts",
+  "version": "0.2.4"
+}

@@ -1,18 +1,5 @@
 {
-  "author": "shiwoo.park <custardcream@kakao.com>",
-  "bugs": {
-    "url": "https://github.com/custardcream98/utility-class-components/issues"
-  },
-  "description": "Build React components using utility classes in the styled-components way!",
-  "peerDependencies": {
-    "react": ">= 17.0.0"
-  },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^25.0.0",
-    "@rollup/plugin-node-resolve": "^15.0.2",
-    "@rollup/plugin-terser": "^0.4.3",
-    "@rollup/plugin-typescript": "^11.1.1",
-    "@types/react": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^5.59.7",
     "@typescript-eslint/parser": "^5.59.7",
     "eslint": "^8.41.0",
@@ -22,34 +9,17 @@
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-sort-keys-fix": "^1.1.2",
     "prettier": "^2.8.8",
-    "react": "^17.0.0",
-    "rollup": "^3.23.0",
-    "rollup-plugin-dts": "^5.3.0",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "pnpm": "^8.6.12"
   },
-  "files": [
-    "dist"
-  ],
-  "homepage": "https://github.com/custardcream98/utility-class-components#readme",
-  "keywords": [
-    "utility-class",
-    "react"
-  ],
-  "license": "MIT",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "name": "utility-class-components",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/custardcream98/utility-class-components.git"
-  },
+  "name": "utility-class-components-root",
   "scripts": {
-    "deploy": "yarn build && yarn publish",
-    "lint": "eslint src",
-    "lint:fix": "eslint src --fix",
-    "build": "rm -rf ./dist && rollup -c"
+    "preinstall": "pnpm dlx only-allow pnpm",
+    "lint": "pnpm wo"
   },
-  "sideEffects": false,
-  "types": "dist/index.d.ts",
-  "version": "0.2.4"
+  "engines": {
+    "node": ">=20.9.0",
+    "pnpm": ">=8.6.12"
+  },
+  "packageManager": "pnpm@8.6.12"
 }
