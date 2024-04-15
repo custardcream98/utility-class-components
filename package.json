@@ -4,10 +4,15 @@
     "@rollup/plugin-node-resolve": "^15.0.2",
     "@rollup/plugin-terser": "^0.4.3",
     "@rollup/plugin-typescript": "^11.1.1",
+    "@types/jest": "^29.5.12",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jsdom": "^24.0.0",
     "pnpm": "^8.6.12",
     "prettier": "^2.8.8",
     "rollup": "^3.23.0",
     "rollup-plugin-dts": "^5.3.0",
+    "ts-jest": "^29.1.2",
     "tslib": "^2.6.2",
     "typescript": "^5.0.4"
   },
@@ -16,7 +21,9 @@
     "build": "pnpm --filter utility-class-components run clear && rollup -c",
     "preinstall": "pnpm dlx only-allow pnpm",
     "publish:utld": "pnpm --filter utility-class-components run publish",
-    "dev": "pnpm --filter web run dev"
+    "dev": "pnpm --filter web run dev",
+    "test": "jest --no-cache",
+    "test:watch": "pnpm run test --watch"
   },
   "engines": {
     "node": ">=20.9.0",
