@@ -20,7 +20,7 @@
   "scripts": {
     "build": "pnpm --filter utility-class-components run clear && rollup -c",
     "preinstall": "pnpm dlx only-allow pnpm",
-    "publish:utld": "pnpm --filter utility-class-components run publish",
+    "publish:utld": "pnpm build && pnpm publish --filter utility-class-components",
     "dev": "pnpm --filter web run dev",
     "test": "jest --no-cache",
     "test:watch": "pnpm run test --watch"
