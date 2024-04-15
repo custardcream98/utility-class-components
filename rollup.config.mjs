@@ -12,7 +12,9 @@ const UTILITY_CLASS_COMPONENTS_PATH = "./packages/utility-class-components";
 
 export default [
   {
-    external: ["react"],
+    external: Object.keys(packageJson.dependencies || {}).concat(
+      Object.keys(packageJson.devDependencies || {}),
+    ),
     input: path.resolve(UTILITY_CLASS_COMPONENTS_PATH, "src/index.ts"),
     output: [
       {
