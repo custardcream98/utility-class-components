@@ -6,6 +6,7 @@ export default function Home() {
       <Box>BOX</Box>
       <WithParenthesis />
       <NestedStyle />
+      <NestedWithCalcStyle />
     </Main>
   );
 }
@@ -57,5 +58,21 @@ const NestedStyle = utld.div`
     text-slate-900
 
     md:(bg-blue-200)
+  )
+`;
+
+const NestedWithCalcStyle = utld.div`
+  bg-gray-100
+  p-4
+  rounded-md
+  w-96
+  text-center
+  text-slate-800
+
+  hover:(
+    bg-red-200
+    text-slate-900
+
+    h-[calc(30vh-4rem)]
   )
 `;
