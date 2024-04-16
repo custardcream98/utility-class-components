@@ -3,6 +3,7 @@
     "source.fixAll.eslint": "explicit",
     "source.fixAll": "explicit"
   },
+  "tailwindCSS.lint.cssConflict": "ignore",
   "tailwindCSS.experimental.classRegex": [
     "utld(?:\\.[a-z0-9]*|\\([^)]*\\))(?:<[^>]*>|)`([^`]*)`",
     "ud`([^`]*)`"
